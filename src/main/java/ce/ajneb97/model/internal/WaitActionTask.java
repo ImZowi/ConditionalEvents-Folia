@@ -1,13 +1,13 @@
 package ce.ajneb97.model.internal;
 
-import org.bukkit.scheduler.BukkitTask;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 
 public class WaitActionTask {
     private String playerName;
     private String eventName;
-    private BukkitTask task;
+    private ScheduledTask task;
 
-    public WaitActionTask(String playerName, String eventName, BukkitTask task) {
+    public WaitActionTask(String playerName, String eventName, ScheduledTask task) {
         this.playerName = playerName;
         this.eventName = eventName;
         this.task = task;
@@ -29,11 +29,11 @@ public class WaitActionTask {
         this.eventName = eventName;
     }
 
-    public BukkitTask getTask() {
+    public ScheduledTask getTask() {
         return task;
     }
 
-    public void setTask(BukkitTask task) {
+    public void setTask(ScheduledTask task) {
         this.task = task;
     }
 }
