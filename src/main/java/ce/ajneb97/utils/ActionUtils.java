@@ -214,31 +214,31 @@ public class ActionUtils {
     }
 
     public static void givePotionEffect(Player player,String actionLine){
-		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> {
-			String[] sep = actionLine.split(";");
-			PotionEffectType potionEffectType = PotionEffectType.getByName(sep[0]);
-			int duration = Integer.valueOf(sep[1]);
-			int level = Integer.valueOf(sep[2])-1;
-			boolean showParticles = true;
-			if(sep.length >= 4) {
-				showParticles = Boolean.valueOf(sep[3]);
-			}
-			PotionEffect effect = new PotionEffect(potionEffectType,duration,level,false,showParticles);
-			player.addPotionEffect(effect);
-		});
+		String[] sep = actionLine.split(";");
+		PotionEffectType potionEffectType = PotionEffectType.getByName(sep[0]);
+		int duration = Integer.valueOf(sep[1]);
+		int level = Integer.valueOf(sep[2])-1;
+		boolean showParticles = true;
+		if(sep.length >= 4) {
+			showParticles = Boolean.valueOf(sep[3]);
+		}
+		PotionEffect effect = new PotionEffect(potionEffectType,duration,level,false,showParticles);
+		player.getScheduler().run(ConditionalEventsAPI.getPlugin(), task -> { player.addPotionEffect(effect); }, null);
     }
 
     public static void removePotionEffect(Player player,String actionLine){
-		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> {
-			if(actionLine.equals("all")){
-				for(PotionEffect effect : player.getActivePotionEffects()){
-					player.removePotionEffect(effect.getType());
+		player.getScheduler().run(ConditionalEventsAPI.getPlugin(), task -> {
+			if (actionLine.equals("all")) {
+				for (PotionEffectType type : PotionEffectType.values()) {
+					player.removePotionEffect(type);
 				}
-			}else{
+			} else {
 				PotionEffectType potionEffectType = PotionEffectType.getByName(actionLine);
-				player.removePotionEffect(potionEffectType);
+				if (potionEffectType != null) {
+					player.removePotionEffect(potionEffectType);
+				}
 			}
-		});
+		}, null);
     }
 
     public static void cancelEvent(String actionLine,Event minecraftEvent){
@@ -253,67 +253,70 @@ public class ActionUtils {
         player.kickPlayer(MessagesManager.getColoredMessage(actionLine));
     }
 
-    public static void playSound(Player player,String actionLine){
-		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> {
-			// playsound: sound;volume;pitch;(optional)<x>,<y>,<z>,<world>
-			String[] sep = actionLine.split(";");
-			Sound sound = null;
-			float volume = 0;
-			float pitch = 0;
-			try {
-				sound = getSoundByName(sep[0]);
-				volume = Float.parseFloat(sep[1]);
-				pitch = Float.parseFloat(sep[2]);
-			}catch(Exception e ) {
-				Bukkit.getConsoleSender().sendMessage(ConditionalEvents.prefix+
-						MessagesManager.getColoredMessage(" &7Sound Name: &c"+sep[0]+" &7is not valid. Change it in the config!"));
-				return;
-			}
+    public static void playSound(final Player player, final String actionLine){
+		// playsound: sound;volume;pitch;(optional)<x>,<y>,<z>,<world>
+		String[] sep = actionLine.split(";");
+		Sound sound = null;
+		float volume = 0;
+		float pitch = 0;
+		try {
+			sound = getSoundByName(sep[0]);
+			volume = Float.parseFloat(sep[1]);
+			pitch = Float.parseFloat(sep[2]);
+		} catch(Exception e ) {
+			Bukkit.getConsoleSender().sendMessage(ConditionalEvents.prefix+
+			MessagesManager.getColoredMessage(" &7Sound Name: &c"+sep[0]+" &7is not valid. Change it in the config!"));
+			return;
+		}
 
-			Location location = null;
-			if(sep.length >= 4){
-				String[] locParameters = sep[3].split(",");
-				location = new Location(
-						Bukkit.getWorld(locParameters[3]),
-						Double.parseDouble(locParameters[0]),
-						Double.parseDouble(locParameters[1]),
-						Double.parseDouble(locParameters[2])
-				);
+		Location location = null;
+		if(sep.length >= 4){
+			String[] locParameters = sep[3].split(",");
+			location = new Location(
+					Bukkit.getWorld(locParameters[3]),
+					Double.parseDouble(locParameters[0]),
+					Double.parseDouble(locParameters[1]),
+					Double.parseDouble(locParameters[2])
+			);
+		}
+		final Location fLoc = location;
+		final Sound fso = sound;
+		final float fvol = volume;
+		final float fpit = pitch;
+		player.getScheduler().run(ConditionalEventsAPI.getPlugin(), task -> {
+			if(fLoc != null) {
+				fLoc.getWorld().playSound(fLoc, fso, fvol, fpit);
+			} else {
+				player.playSound(player.getLocation(), fso, fvol, fpit);
 			}
-
-			if(location != null){
-				location.getWorld().playSound(location,sound,volume,pitch);
-			}else{
-				player.playSound(player.getLocation(), sound, volume, pitch);
-			}
-		});
+		}, null);
     }
 
-    public static void playSoundResourcePack(Player player,String actionLine){
-		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> {
-			// playsound_resource_pack: sound;volume;pitch;(optional)<x>,<y>,<z>,<world>
-			String[] sep = actionLine.split(";");
-			String sound = sep[0];
-			float volume = Float.parseFloat(sep[1]);
-			float pitch = Float.parseFloat(sep[2]);
+    public static void playSoundResourcePack(final Player player, final String actionLine){
+		// playsound_resource_pack: sound;volume;pitch;(optional)<x>,<y>,<z>,<world>
+		String[] sep = actionLine.split(";");
+		final String sound = sep[0];
+		final float volume = Float.parseFloat(sep[1]);
+		final float pitch = Float.parseFloat(sep[2]);
 
-			Location location = null;
-			if(sep.length >= 4){
-				String[] locParameters = sep[3].split(",");
-				location = new Location(
-						Bukkit.getWorld(locParameters[3]),
-						Double.parseDouble(locParameters[0]),
-						Double.parseDouble(locParameters[1]),
-						Double.parseDouble(locParameters[2])
-				);
-			}
-
-			if(location != null){
-				location.getWorld().playSound(location,sound,volume,pitch);
-			}else{
+		Location location = null;
+		if(sep.length >= 4){
+			String[] locParameters = sep[3].split(",");
+			location = new Location(
+					Bukkit.getWorld(locParameters[3]),
+					Double.parseDouble(locParameters[0]),
+					Double.parseDouble(locParameters[1]),
+					Double.parseDouble(locParameters[2])
+			);
+		}
+		final Location fLoc = location;
+		player.getScheduler().run(ConditionalEventsAPI.getPlugin(), task -> {
+			if(fLoc != null) {
+				fLoc.getWorld().playSound(fLoc, sound, volume, pitch);
+			} else {
 				player.playSound(player.getLocation(), sound, volume, pitch);
 			}
-		});
+		}, null);
     }
 
     public static void stopSound(Player player,String actionLine){
