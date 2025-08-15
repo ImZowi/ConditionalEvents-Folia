@@ -9,6 +9,7 @@ import java.util.List;
 public class CEEvent {
 
     private String name;
+	private String filePath;
     private List<String> conditions;
     private EventType eventType;
     private List<ActionGroup> actionGroups;

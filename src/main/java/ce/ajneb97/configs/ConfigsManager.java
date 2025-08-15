@@ -59,6 +59,8 @@ public class ConfigsManager {
             if(config.contains("Events")){
                 for(String key : config.getConfigurationSection("Events").getKeys(false)){
                     String path = "Events."+key;
+					String filePath = configFile.getPath();
+					
                     List<String> conditions = new ArrayList<String>();
                     List<ActionGroup> actionGroups = new ArrayList<ActionGroup>();
                     boolean oneTime = false;
