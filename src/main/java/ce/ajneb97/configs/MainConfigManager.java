@@ -1,14 +1,9 @@
 package ce.ajneb97.configs;
 
 import ce.ajneb97.ConditionalEvents;
+import ce.ajneb97.configs.model.CommonConfig;
 import ce.ajneb97.managers.MessagesManager;
-import ce.ajneb97.managers.RepetitiveManager;
-import ce.ajneb97.model.CEEvent;
-import ce.ajneb97.model.CustomEventProperties;
-import ce.ajneb97.model.EventType;
 import ce.ajneb97.model.ToConditionGroup;
-import ce.ajneb97.model.actions.*;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.io.IOException;
@@ -20,7 +15,7 @@ import java.util.List;
 
 public class MainConfigManager {
 
-    private CEConfig configFile;
+    private CommonConfig configFile;
     private ConditionalEvents plugin;
 
     private boolean updateNotifications;
@@ -29,14 +24,12 @@ public class MainConfigManager {
     private ArrayList<ToConditionGroup> toConditionGroups;
     public MainConfigManager(ConditionalEvents plugin){
         this.plugin = plugin;
-        this.configFile = new CEConfig("config.yml",plugin,null);
+        this.configFile = new CommonConfig("config.yml",plugin,null,false);
         configFile.registerConfig();
         checkMessagesUpdate();
     }
-
     public void configure(){
         FileConfiguration config = configFile.getConfig();
-
         updateNotifications = config.getBoolean("Config.update_notification");
         debugActions = config.getBoolean("Config.debug_actions");
         experimentalVariableReplacement = config.getBoolean("Config.experimental.variable_replacement");
@@ -48,7 +41,6 @@ public class MainConfigManager {
                 toConditionGroups.add(group);
             }
         }
-
         //Configure messages
         MessagesManager msgManager = new MessagesManager();
         msgManager.setTimeSeconds(config.getString("Messages.seconds"));
@@ -58,10 +50,8 @@ public class MainConfigManager {
         msgManager.setPrefix(config.getString("Messages.prefix"));
         msgManager.setPlaceholderAPICooldownNameError(config.getString("Messages.placeholderAPICooldownNameError"));
         msgManager.setPlaceholderAPICooldownReady(config.getString("Messages.placeholderAPICooldownReady"));
-
         this.plugin.setMessagesManager(msgManager);
     }
-
     public boolean reloadConfig(){
         if(!configFile.reloadConfig()){
             return false;
@@ -69,12 +59,11 @@ public class MainConfigManager {
         configure();
         return true;
     }
-
     public FileConfiguration getConfig(){
         return configFile.getConfig();
     }
 
-    public CEConfig getConfigFile(){
+    public CommonConfig getConfigFile(){
         return this.configFile;
     }
 

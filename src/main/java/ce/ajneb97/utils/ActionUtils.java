@@ -343,6 +343,14 @@ public class ActionUtils {
         }
     }
 
+    public static void stopSoundResourcePack(Player player,String actionLine){
+        // stopsound_resource_pack: sound
+        ServerVersion serverVersion = ConditionalEvents.serverVersion;
+        if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_10_R1)) {
+            player.stopSound(actionLine);
+        }
+    }
+
     private static Sound getSoundByName(String name){
         try {
             Class<?> soundTypeClass = Class.forName("org.bukkit.Sound");
@@ -1009,8 +1017,12 @@ public class ActionUtils {
                         continue;
                     }
 
-                    String[] variableLineSep = sep[i].split("=");
-                    variables.add(new StoredVariable(variableLineSep[0],variableLineSep[1]));
+                    int index = sep[i].indexOf("=");
+                    if (index != -1) {
+                        String variable = sep[i].substring(0, index);
+                        String value = sep[i].substring(index + 1);
+                        variables.add(new StoredVariable(variable,value));
+                    }
                 }
             }
         }catch(Exception e){

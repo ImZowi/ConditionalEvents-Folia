@@ -172,4 +172,12 @@ public class CEEvent {
         }
         return null;
     }
+	
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 }

@@ -23,13 +23,13 @@ public class PlayerDataSaveTask {
 	public void start(int minutes) {
 		long ticks = minutes*60*20;
 		
-        	exec.scheduleAtFixedRate(() -> {
-           		if (end) {
-        			exec.shutdownNow();
-            		} else {
-                		execute();
-            		}
-        	}, 0, ticks, TimeUnit.SECONDS);
+        exec.scheduleAtFixedRate(() -> {
+            if (end) {
+                exec.shutdownNow();
+            } else {
+                execute();
+            }
+        }, 0, ticks, TimeUnit.SECONDS);
 	}
 	
 	public void execute() {
