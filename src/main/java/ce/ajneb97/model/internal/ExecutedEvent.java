@@ -421,6 +421,26 @@ public class ExecutedEvent {
             case HEAL:
                 ActionUtils.heal(livingEntity, actionLine);
                 return;
+<<<<<<< HEAD
+=======
+            case SET_FOOD_LEVEL:
+                ActionUtils.setFoodLevel(player, actionLine);
+                return;
+            case GIVE_ITEM:
+                ActionUtils.giveItem(player, actionLine);
+                return;
+            case STOPSOUND:
+                ActionUtils.stopSound(player, actionLine);
+                return;
+            case STOPSOUND_RESOURCE_PACK:
+                ActionUtils.stopSoundResourcePack(player, actionLine);
+                return;
+            //case VECTOR:
+            //    ActionUtils.vector(player, actionLine);
+            //    return;
+            case TAB_COMPLETE:
+                ActionUtils.tabComplete(actionLine,minecraftEvent);
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
         }
 
     }

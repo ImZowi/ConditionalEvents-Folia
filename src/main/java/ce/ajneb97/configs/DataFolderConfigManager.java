@@ -24,7 +24,7 @@ public abstract class DataFolderConfigManager {
         File folder;
         try {
             folder = new File(plugin.getDataFolder() + File.separator + folderName);
-            if(!folder.exists()){
+            if (!folder.exists()){
                 folder.mkdirs();
                 createFiles();
             }
@@ -62,4 +62,8 @@ public abstract class DataFolderConfigManager {
     public abstract void loadConfigs();
 
     public abstract void saveConfigs();
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a

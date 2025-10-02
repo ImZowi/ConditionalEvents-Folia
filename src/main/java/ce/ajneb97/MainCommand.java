@@ -195,7 +195,11 @@ public class MainCommand implements CommandExecutor, TabCompleter {
 		boolean silent = args.length >= 3 && args[2].equals("silent:true");
 
 		e.disable();
+<<<<<<< HEAD
 		plugin.getInterruptEventManager().interruptEvent(eventName,null);
+=======
+		plugin.getInterruptEventManager().interruptEvent(eventName, null);
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
 
 		plugin.getConfigsManager().saveEvent(e);
 

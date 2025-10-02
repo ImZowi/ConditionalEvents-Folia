@@ -35,4 +35,8 @@ jobs:
       uses: actions/upload-artifact@v4.6.2
       with:
         name: ConditionalEvents-Folia
+<<<<<<< HEAD
         path: target/ConditionalEvents-Folia-*.jar
+=======
+        path: target/ConditionalEvents-Folia-*.jar
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a

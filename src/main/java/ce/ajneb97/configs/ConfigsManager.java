@@ -59,8 +59,13 @@ public class ConfigsManager {
             if(config.contains("Events")){
                 for(String key : config.getConfigurationSection("Events").getKeys(false)){
                     String path = "Events."+key;
+<<<<<<< HEAD
                     String filePath = configFile.getPath();
 
+=======
+					String filePath = configFile.getPath();
+					
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
                     List<String> conditions = new ArrayList<String>();
                     List<ActionGroup> actionGroups = new ArrayList<ActionGroup>();
                     boolean oneTime = false;
@@ -183,7 +188,11 @@ public class ConfigsManager {
                         allowMathFormulasInConditions = Boolean.valueOf(config.getString(path+".allow_math_formulas_in_conditions"));
                     }
 
+<<<<<<< HEAD
                     event.setFilePath(filePath);
+=======
+					event.setFilePath(filePath);
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
                     event.setEventType(eventType);
                     event.setConditions(conditions);
                     event.setActionGroups(actionGroups);
@@ -234,9 +243,15 @@ public class ConfigsManager {
         String path = event.getFilePath();
 
         CommonConfig commonConfig;
+<<<<<<< HEAD
         if(path.equals("config.yml")){
             commonConfig = mainConfigManager.getConfigFile();
         }else{
+=======
+        if (path.equals("config.yml")){
+            commonConfig = mainConfigManager.getConfigFile();
+        } else {
+>>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
             commonConfig = eventsFolderConfigManager.getConfigFile(path);
         }
 

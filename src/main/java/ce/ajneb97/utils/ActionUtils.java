@@ -77,20 +77,22 @@ public class ActionUtils {
     }
 
     public static void playerCommand(Player player,String actionLine){
-        player.performCommand(actionLine);
+        FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> { player.performCommand(actionLine); });
     }
 
     public static void playerCommandAsOp(Player player,String actionLine){
-        boolean isOp = player.isOp();
-        player.setOp(true);
-        player.performCommand(actionLine);
-        if(!isOp) {
-            player.setOp(false);
-        }
+		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> { 
+			boolean isOp = player.isOp();
+			player.setOp(true);
+			player.performCommand(actionLine);
+			if(!isOp) {
+				player.setOp(false);
+			}
+		});
     }
 
     public static void playerSendChat(Player player,String actionLine){
-        player.chat(MessagesManager.getColoredMessage(actionLine));
+		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> { player.chat(MessagesManager.getColoredMessage(actionLine)); });
     }
 
     public static void sendToServer(Player player,String actionLine,ConditionalEvents plugin){

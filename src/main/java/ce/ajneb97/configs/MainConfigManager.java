@@ -29,10 +29,8 @@ public class MainConfigManager {
         configFile.registerConfig();
         checkMessagesUpdate();
     }
-
     public void configure(){
         FileConfiguration config = configFile.getConfig();
-
         updateNotifications = config.getBoolean("Config.update_notification");
         debugActions = config.getBoolean("Config.debug_actions");
         experimentalVariableReplacement = config.getBoolean("Config.experimental.variable_replacement");
@@ -45,7 +43,6 @@ public class MainConfigManager {
                 toConditionGroups.add(group);
             }
         }
-
         //Configure messages
         MessagesManager msgManager = new MessagesManager();
         msgManager.setTimeSeconds(config.getString("Messages.seconds"));
@@ -55,10 +52,8 @@ public class MainConfigManager {
         msgManager.setPrefix(config.getString("Messages.prefix"));
         msgManager.setPlaceholderAPICooldownNameError(config.getString("Messages.placeholderAPICooldownNameError"));
         msgManager.setPlaceholderAPICooldownReady(config.getString("Messages.placeholderAPICooldownReady"));
-
         this.plugin.setMessagesManager(msgManager);
     }
-
     public boolean reloadConfig(){
         if(!configFile.reloadConfig()){
             return false;
@@ -66,7 +61,6 @@ public class MainConfigManager {
         configure();
         return true;
     }
-
     public FileConfiguration getConfig(){
         return configFile.getConfig();
     }
