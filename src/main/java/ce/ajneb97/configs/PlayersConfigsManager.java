@@ -8,11 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.ArrayList;
 
 public class PlayersConfigsManager extends DataFolderConfigManager{
-<<<<<<< HEAD
-	
-=======
 
->>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
 	public PlayersConfigsManager(ConditionalEvents plugin, String folderName) {
 		super(plugin, folderName);
 	}
@@ -79,8 +75,4 @@ public class PlayersConfigsManager extends DataFolderConfigManager{
 			player.setModified(false);
 		}
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a

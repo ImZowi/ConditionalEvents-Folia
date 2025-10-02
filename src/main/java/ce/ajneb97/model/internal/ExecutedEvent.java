@@ -421,8 +421,6 @@ public class ExecutedEvent {
             case HEAL:
                 ActionUtils.heal(livingEntity, actionLine);
                 return;
-<<<<<<< HEAD
-=======
             case SET_FOOD_LEVEL:
                 ActionUtils.setFoodLevel(player, actionLine);
                 return;
@@ -440,7 +438,6 @@ public class ExecutedEvent {
             //    return;
             case TAB_COMPLETE:
                 ActionUtils.tabComplete(actionLine,minecraftEvent);
->>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
         }
 
     }

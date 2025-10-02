@@ -6,11 +6,7 @@
 
     <groupId>ce.ajneb97</groupId>
     <artifactId>ConditionalEvents-Folia</artifactId>
-<<<<<<< HEAD
     <version>4.68.1</version>
-=======
-    <version>4.66.1</version>
->>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

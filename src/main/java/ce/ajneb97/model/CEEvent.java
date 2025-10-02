@@ -9,11 +9,7 @@ import java.util.List;
 public class CEEvent {
 
     private String name;
-<<<<<<< HEAD
     private String filePath;
-=======
-	private String filePath;
->>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
     private List<String> conditions;
     private EventType eventType;
     private List<ActionGroup> actionGroups;
@@ -177,11 +173,7 @@ public class CEEvent {
         }
         return null;
     }
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 4ff4fd5d45b5469f47175220762728224b08f43a
     public String getFilePath() {
         return filePath;
     }
