@@ -2,8 +2,9 @@ main: ce.ajneb97.ConditionalEvents
 version: ${project.version}
 name: ConditionalEvents
 api-version: 1.13
-softdepend: [PlaceholderAPI,Citizens,WorldGuardEvents,WorldGuard,ProtocolLib,DiscordSRV]
-author: Ajneb97
+softdepend: [PlaceholderAPI, Citizens, WorldGuardEvents, WorldGuard, ProtocolLib, DiscordSRV]
+authors: ["Ajneb97", "Zowi"]
+folia-supported: true
 
 commands:
   conditionalevents:

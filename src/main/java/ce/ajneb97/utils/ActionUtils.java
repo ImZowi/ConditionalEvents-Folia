@@ -31,14 +31,16 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.function.Consumer;
+
+import ce.ajneb97.libs.FoliaAPI;
 
 public class ActionUtils {
 
@@ -68,8 +70,10 @@ public class ActionUtils {
     }
 
     public static void consoleCommand(String actionLine){
-        ConsoleCommandSender sender = Bukkit.getConsoleSender();
-        Bukkit.dispatchCommand(sender, actionLine);
+		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> {
+			ConsoleCommandSender sender = Bukkit.getConsoleSender();
+			Bukkit.dispatchCommand(sender, actionLine);
+		});
     }
 
     public static void playerCommand(Player player,String actionLine){
@@ -103,11 +107,11 @@ public class ActionUtils {
         float pitch = Float.parseFloat(sep[5]);
         Location l = new Location(world,x,y,z,yaw,pitch);
 
-        if(minecraftEvent instanceof PlayerRespawnEvent) {
+        if (minecraftEvent instanceof PlayerRespawnEvent) {
             PlayerRespawnEvent respawnEvent = (PlayerRespawnEvent) minecraftEvent;
             respawnEvent.setRespawnLocation(l);
-        }else {
-            livingEntity.teleport(l);
+        } else {
+            FoliaAPI.teleportAsync(livingEntity, l, FoliaAPI.isFolia());
         }
     }
 
@@ -855,45 +859,51 @@ public class ActionUtils {
         player.setFoodLevel(Integer.parseInt(actionLine));
     }
 
-    public static void wait(String actionLine, ExecutedEvent executedEvent){
-        executedEvent.setOnWait(true);
-        int timeSeconds = Integer.parseInt(actionLine);
+	public static void wait(String actionLine, ExecutedEvent executedEvent){
+		executedEvent.setOnWait(true);
+		long timeTicks = Long.parseLong(actionLine) * 20L;
 
-        InterruptEventManager interruptEventManager = ConditionalEventsAPI.getPlugin().getInterruptEventManager();
-        BukkitTask task = new BukkitRunnable(){
-            @Override
-            public void run() {
-                interruptEventManager.removeTaskById(this.getTaskId());
-                executedEvent.continueWithActions();
-            }
-        }.runTaskLater(executedEvent.getPlugin(), timeSeconds* 20L);
+		InterruptEventManager interruptEventManager = ConditionalEventsAPI.getPlugin().getInterruptEventManager();
 
-        interruptEventManager.addTask(
-                executedEvent.getPlayer() != null ? executedEvent.getPlayer().getName() : null,
-                executedEvent.getEvent().getName(),
-                task
-        );
-    }
+		Consumer<ScheduledTask> taskConsumer = scheduledTask -> {
+			interruptEventManager.removeTask(scheduledTask);
+			executedEvent.continueWithActions();
+		};
 
-    public static void waitTicks(String actionLine, ExecutedEvent executedEvent){
-        executedEvent.setOnWait(true);
-        long timeTicks = Long.parseLong(actionLine);
+		ScheduledTask task = executedEvent.getPlugin()
+				.getServer()
+				.getGlobalRegionScheduler()
+				.runDelayed(executedEvent.getPlugin(), taskConsumer, timeTicks);
 
-        InterruptEventManager interruptEventManager = ConditionalEventsAPI.getPlugin().getInterruptEventManager();
-        BukkitTask task = new BukkitRunnable(){
-            @Override
-            public void run() {
-                interruptEventManager.removeTaskById(this.getTaskId());
-                executedEvent.continueWithActions();
-            }
-        }.runTaskLater(executedEvent.getPlugin(), timeTicks);
+		interruptEventManager.addTask(
+				executedEvent.getPlayer() != null ? executedEvent.getPlayer().getName() : null,
+				executedEvent.getEvent().getName(),
+				task
+		);
+	}
 
-        interruptEventManager.addTask(
-                executedEvent.getPlayer() != null ? executedEvent.getPlayer().getName() : null,
-                executedEvent.getEvent().getName(),
-                task
-        );
-    }
+	public static void waitTicks(String actionLine, ExecutedEvent executedEvent){
+		executedEvent.setOnWait(true);
+		long timeTicks = Long.parseLong(actionLine);
+
+		InterruptEventManager interruptEventManager = ConditionalEventsAPI.getPlugin().getInterruptEventManager();
+
+		Consumer<ScheduledTask> taskConsumer = scheduledTask -> {
+			interruptEventManager.removeTask(scheduledTask);
+			executedEvent.continueWithActions();
+		};
+
+		ScheduledTask task = executedEvent.getPlugin()
+				.getServer()
+				.getGlobalRegionScheduler()
+				.runDelayed(executedEvent.getPlugin(), taskConsumer, timeTicks);
+
+		interruptEventManager.addTask(
+				executedEvent.getPlayer() != null ? executedEvent.getPlayer().getName() : null,
+				executedEvent.getEvent().getName(),
+				task
+		);
+	}
 
     public static void keepItems(String actionLine,Event minecraftEvent){
         if(minecraftEvent instanceof PlayerDeathEvent) {

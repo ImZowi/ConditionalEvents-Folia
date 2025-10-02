@@ -85,6 +85,7 @@ public class ConditionalEvents extends JavaPlugin {
 
 		Bukkit.getConsoleSender().sendMessage(MessagesManager.getColoredMessage(prefix+" &eHas been enabled! &fVersion: "+version));
         Bukkit.getConsoleSender().sendMessage(MessagesManager.getColoredMessage(prefix+" &eThanks for using my plugin!   &f~Ajneb97"));
+		Bukkit.getConsoleSender().sendMessage(MessagesManager.getColoredMessage(prefix+" &rFolia Fork made by &aZowi &8- &bdiscord.zowi.gay"));
 
 		updateCheckerManager = new UpdateCheckerManager(version);
 		if(configsManager.getMainConfigManager().isUpdateNotifications()){
