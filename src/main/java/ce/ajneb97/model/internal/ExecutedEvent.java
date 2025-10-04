@@ -11,12 +11,12 @@ import ce.ajneb97.model.ToConditionGroup;
 import ce.ajneb97.model.actions.*;
 import ce.ajneb97.utils.ActionUtils;
 import ce.ajneb97.utils.VariablesUtils;
+import ce.ajneb97.libs.FoliaAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -99,18 +99,10 @@ public class ExecutedEvent {
         //Check cancel event or prevent join, always first to prevent issues with async events.
         executeCancelActions();
 
-        if(!Bukkit.isPrimaryThread()){
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    plugin.getServer().getPluginManager().callEvent(ceEvent);
-                    executeActionsFinal();
-                }
-            }.runTask(plugin);
-        }else{
+        FoliaAPI.runTask(plugin, () -> {
             plugin.getServer().getPluginManager().callEvent(ceEvent);
             executeActionsFinal();
-        }
+        });
     }
 
     public void executeCancelActions(){
@@ -395,6 +387,8 @@ public class ExecutedEvent {
                 //    return;
                 case TAB_COMPLETE:
                     ActionUtils.tabComplete(actionLine,minecraftEvent);
+                default:
+                    break;
             }
         }
 
@@ -438,6 +432,8 @@ public class ExecutedEvent {
             //    return;
             case TAB_COMPLETE:
                 ActionUtils.tabComplete(actionLine,minecraftEvent);
+            default:
+                break;
         }
 
     }
