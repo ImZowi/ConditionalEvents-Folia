@@ -40,3 +40,4 @@ dependency-reduced-pom.xml
 .recommenders
 .idea/
 target/
+.vscode
