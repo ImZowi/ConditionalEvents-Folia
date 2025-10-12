@@ -164,6 +164,29 @@ public class FoliaAPI {
         invokeMethod(method, globalRegionScheduler, pl, run);
     }
 
+    public static void runEntityTask(Plugin plugin, Entity entity, Runnable task) {
+        if (entity == null || !entity.isValid()) {
+            plugin.getLogger().warning("Attempted to run task for null or invalid entity");
+            return;
+        }
+
+        if (isFolia()) {
+            try {
+                entity.getScheduler().run(plugin, scheduledTask -> task.run(), null);
+            } catch (Exception e) {
+                plugin.getLogger().severe("Failed to schedule Folia entity task: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                bS.runTask(plugin, task);
+            } catch (Exception e) {
+                plugin.getLogger().severe("Failed to schedule Bukkit task: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
     public static void runTaskForEntity(Plugin pl, Entity entity, Runnable run, Runnable retired, long delay) {
         if (!isFolia()) {
             bS.runTaskLater(pl, run, delay);
@@ -241,7 +264,7 @@ public class FoliaAPI {
             if (teleportMethod != null) {
                 Object result = invokeMethod(teleportMethod, entity, location);
                 if (result instanceof CompletableFuture) {
-                    return ((CompletableFuture<Boolean>) result).thenApply(success -> Boolean.TRUE.equals(success));
+                    return ((CompletableFuture<Boolean>) result).thenApply(Boolean.TRUE::equals);
                 }
                 return CompletableFuture.completedFuture(result != null);
             }
@@ -249,7 +272,7 @@ public class FoliaAPI {
                 Method playerTeleportMethod = cachedMethods.get("player.teleportAsync");
                 Object result = invokeMethod(playerTeleportMethod, entity, location);
                 if (result instanceof CompletableFuture) {
-                    return ((CompletableFuture<Boolean>) result).thenApply(success -> Boolean.TRUE.equals(success));
+                    return ((CompletableFuture<Boolean>) result).thenApply(Boolean.TRUE::equals);
                 }
                 return CompletableFuture.completedFuture(result != null);
             }

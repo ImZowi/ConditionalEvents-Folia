@@ -76,23 +76,23 @@ public class ActionUtils {
 		});
     }
 
-    public static void playerCommand(Player player,String actionLine){
-        FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> { player.performCommand(actionLine); });
+    public static void playerCommand(Player player, String actionLine) {
+        FoliaAPI.runEntityTask(ConditionalEventsAPI.getPlugin(), player, () -> player.performCommand(actionLine));
     }
 
-    public static void playerCommandAsOp(Player player,String actionLine){
-		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> { 
-			boolean isOp = player.isOp();
-			player.setOp(true);
-			player.performCommand(actionLine);
-			if(!isOp) {
-				player.setOp(false);
-			}
-		});
+    public static void playerCommandAsOp(Player player, String actionLine) {
+        FoliaAPI.runEntityTask(ConditionalEventsAPI.getPlugin(), player, () -> {
+            boolean isOp = player.isOp();
+            player.setOp(true);
+            player.performCommand(actionLine);
+            if (!isOp) {
+                player.setOp(false);
+            }
+        });
     }
 
-    public static void playerSendChat(Player player,String actionLine){
-		FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> { player.chat(MessagesManager.getColoredMessage(actionLine)); });
+    public static void playerSendChat(Player player, String actionLine) {
+        FoliaAPI.runEntityTask(ConditionalEventsAPI.getPlugin(), player, () -> player.chat(MessagesManager.getColoredMessage(actionLine)));
     }
 
     public static void sendToServer(Player player,String actionLine,ConditionalEvents plugin){
@@ -145,14 +145,14 @@ public class ActionUtils {
 
         String[] sep = actionLine.split(";");
         String material = sep[0];
-        int amount = Integer.valueOf(sep[1]);
+        int amount = Integer.parseInt(sep[1]);
         short datavalue = 0;
         String name = null;
         String loreContainsLoreLine = null;
 
         for(String sepLine : sep) {
             if(sepLine.startsWith("datavalue: ")) {
-                datavalue = Short.valueOf(sepLine.replace("datavalue: ", ""));
+                datavalue = Short.parseShort(sepLine.replace("datavalue: ", ""));
             }else if(sepLine.startsWith("name: ")) {
                 name = sepLine.replace("name: ", "");
             }else if(sepLine.startsWith("lorecontains: ")) {
@@ -220,7 +220,7 @@ public class ActionUtils {
         int level = Integer.parseInt(sep[2])-1;
         boolean showParticles = true;
         if(sep.length >= 4) {
-            showParticles = Boolean.valueOf(sep[3]);
+            showParticles = Boolean.parseBoolean(sep[3]);
         }
         PotionEffect effect = new PotionEffect(potionEffectType,duration,level,false,showParticles);
         livingEntity.addPotionEffect(effect);
@@ -238,7 +238,7 @@ public class ActionUtils {
     }
 
     public static void cancelEvent(String actionLine,Event minecraftEvent){
-        boolean cancel = Boolean.valueOf(actionLine);
+        boolean cancel = Boolean.parseBoolean(actionLine);
         if(minecraftEvent != null && minecraftEvent instanceof Cancellable) {
             Cancellable cancellableEvent = (Cancellable) minecraftEvent;
             cancellableEvent.setCancelled(cancel);
@@ -252,9 +252,9 @@ public class ActionUtils {
     public static void playSound(LivingEntity livingEntity,String actionLine){
         // playsound: sound;volume;pitch;(optional)<x>,<y>,<z>,<world>
         String[] sep = actionLine.split(";");
-        Sound sound = null;
-        float volume = 0;
-        float pitch = 0;
+        Sound sound;
+        float volume;
+        float pitch;
         try {
             sound = getSoundByName(sep[0]);
             volume = Float.parseFloat(sep[1]);
@@ -431,7 +431,7 @@ public class ActionUtils {
         if(minecraftEvent instanceof PlayerFishEvent){
             PlayerFishEvent event = (PlayerFishEvent) minecraftEvent;
             Entity caught = event.getCaught();
-            if(caught != null && caught instanceof Item){
+            if(caught instanceof Item){
                 Item item = (Item) caught;
                 item.setItemStack(ItemUtils.getItemFromProperties(sep,null));
             }
@@ -610,15 +610,15 @@ public class ActionUtils {
     public static void actionbar(Player player,String actionLine,ConditionalEvents plugin){
         String[] sep = actionLine.split(";");
         String text = sep[0];
-        int duration = Integer.valueOf(sep[1]);
+        int duration = Integer.parseInt(sep[1]);
         ActionBarAPI.sendActionBar(player,text,duration,plugin);
     }
 
     public static void title(Player player,String actionLine){
         String[] sep = actionLine.split(";");
-        int fadeIn = Integer.valueOf(sep[0]);
-        int stay = Integer.valueOf(sep[1]);
-        int fadeOut = Integer.valueOf(sep[2]);
+        int fadeIn = Integer.parseInt(sep[0]);
+        int stay = Integer.parseInt(sep[1]);
+        int fadeOut = Integer.parseInt(sep[2]);
 
         String title = sep[3];
         String subtitle = sep[4];
@@ -850,11 +850,7 @@ public class ActionUtils {
         double maxHealth = livingEntity.getMaxHealth();
         double currentHealth = livingEntity.getHealth();
         double newHealth = currentHealth+Double.parseDouble(actionLine);
-        if(newHealth >= maxHealth){
-            livingEntity.setHealth(maxHealth);
-        }else{
-            livingEntity.setHealth(newHealth);
-        }
+        livingEntity.setHealth(Math.min(newHealth, maxHealth));
     }
 
     public static void setFoodLevel(Player player,String actionLine){
@@ -1013,7 +1009,7 @@ public class ActionUtils {
         // call_event: <event>;%variable1%=<value1>;%variable2%=<value2>
         // call_event: <event>;%variable1%=<value1>;%variable2%=<value2>;already_stored
         ArrayList<StoredVariable> variables = new ArrayList<>();
-        String eventName = null;
+        String eventName;
         try{
             String[] sep = actionLine.split(";");
             eventName = sep[0];
@@ -1046,8 +1042,8 @@ public class ActionUtils {
 
     public static void executeActionGroup(String actionLine,ExecutedEvent executedEvent,ConditionalEvents plugin){
         // execute_action_group: <group1>:<prob1>;<group2>:<prob2>
-        ArrayList<String> actionGroups = new ArrayList<String>();
-        ArrayList<Integer> probs = new ArrayList<Integer>();
+        ArrayList<String> actionGroups = new ArrayList<>();
+        ArrayList<Integer> probs = new ArrayList<>();
 
         String[] sep = actionLine.split(";");
         for(String line : sep){
