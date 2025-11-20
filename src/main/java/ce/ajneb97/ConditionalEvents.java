@@ -82,10 +82,11 @@ public class ConditionalEvents extends JavaPlugin {
 		if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null){
 			new ExpansionCE(this).register();
 		}
-		Metrics metrics = new Metrics(this, 19371);
+		Metrics metrics = new Metrics(this, 28038);
 
 		Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eHas been enabled! &fVersion: "+version));
         Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eThanks for using my plugin!   &f~Ajneb97"));
+		Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &rFolia Fork made by &aZowi &8- &bdiscord.zowi.gay"));
 
 		updateCheckerManager = new UpdateCheckerManager(version);
 		if(configsManager.getMainConfigManager().isUpdateNotifications()){
@@ -101,6 +102,7 @@ public class ConditionalEvents extends JavaPlugin {
 				.checkEvent();
 		this.configsManager.getPlayerConfigsManager().saveConfigs();
 		Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eHas been disabled! &fVersion: "+version));
+		Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &rFolia Fork made by &aZowi &8- &bdiscord.zowi.gay"));
 	}
 
 	public void registerEvents() {

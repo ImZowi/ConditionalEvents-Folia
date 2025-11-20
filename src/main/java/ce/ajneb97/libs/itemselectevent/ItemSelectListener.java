@@ -14,8 +14,8 @@ import org.bukkit.event.player.PlayerItemBreakEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.scheduler.BukkitRunnable;
 import ce.ajneb97.ConditionalEvents;
+import ce.ajneb97.libs.FoliaAPI;
 
 public class ItemSelectListener implements Listener{
 	
@@ -82,13 +82,8 @@ public class ItemSelectListener implements Listener{
 			ItemSelectEvent selectEvent = new ItemSelectEvent(player,item,action);
 			Bukkit.getServer().getPluginManager().callEvent(selectEvent);
 		}
-		
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				players.remove(player);
-			}
-		}.runTaskLater(plugin, 3L);
+
+		FoliaAPI.runTask(plugin, () -> { players.remove(player); }, 3L); 
 	}
 	
 	@SuppressWarnings("deprecation")

@@ -1,6 +1,7 @@
 package ce.ajneb97.model.internal;
 
 import ce.ajneb97.ConditionalEvents;
+import ce.ajneb97.api.ConditionalEventsAPI;
 import ce.ajneb97.api.ConditionalEventsEvent;
 import ce.ajneb97.managers.DebugManager;
 import ce.ajneb97.managers.EventsManager;
@@ -16,10 +17,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ce.ajneb97.libs.FoliaAPI;
 
 // Represent an event that has accomplished all conditions and actions
 // are being executed.
@@ -102,13 +104,10 @@ public class ExecutedEvent {
         executeCancelActions();
 
         if(!Bukkit.isPrimaryThread()){
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    plugin.getServer().getPluginManager().callEvent(ceEvent);
-                    executeActionsFinal();
-                }
-            }.runTask(plugin);
+            FoliaAPI.runTask(ConditionalEventsAPI.getPlugin(), () -> {
+				plugin.getServer().getPluginManager().callEvent(ceEvent);
+				executeActionsFinal();
+            });
         }else{
             plugin.getServer().getPluginManager().callEvent(ceEvent);
             executeActionsFinal();

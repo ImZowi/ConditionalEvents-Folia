@@ -69,7 +69,7 @@ public class PlayerEventsListener implements Listener {
         if(player.isOp() && !(plugin.version.equals(latestVersion)) &&
                 plugin.getConfigsManager().getMainConfigManager().isUpdateNotifications()){
             player.sendMessage(MessagesManager.getLegacyColoredMessage(plugin.prefix+" &cThere is a new version available. &e(&7"+latestVersion+"&e)"));
-            player.sendMessage(MessagesManager.getLegacyColoredMessage("&cYou can download it at: &ahttps://modrinth.com/plugin/conditionalevents"));
+            player.sendMessage(MessagesManager.getLegacyColoredMessage("&cYou can download it at: &ahttps://github.com/ImZowi/ServerVariables-Folia"));
         }
     }
 
