@@ -2,15 +2,14 @@ package ce.ajneb97.listeners;
 
 import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.libs.itemselectevent.ItemSelectEvent;
+import ce.ajneb97.libs.repairevent.RepairEvent;
 import ce.ajneb97.model.EventType;
 import ce.ajneb97.model.StoredVariable;
 import ce.ajneb97.model.internal.ConditionEvent;
 import ce.ajneb97.utils.InventoryUtils;
 import ce.ajneb97.utils.MiniMessageUtils;
-import ce.ajneb97.utils.OtherUtils;
 import ce.ajneb97.utils.ServerVersion;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -22,13 +21,10 @@ import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.view.AnvilView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,54 +86,15 @@ public class ItemEventsListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onItemRepair(InventoryClickEvent event) {
-        if(!event.getInventory().getType().equals(InventoryType.ANVIL)){
-            return;
-        }
-        if(OtherUtils.isLegacy()){
-            return;
-        }
-        if(!(event.getInventory() instanceof AnvilInventory)){
-            return;
-        }
-        AnvilInventory inv = (AnvilInventory) event.getInventory();
+    public void onItemRepair(RepairEvent event) {
+        Player player = event.getPlayer();
 
-        Player player = (Player) event.getWhoClicked();
-
-        if(!inv.equals(InventoryUtils.getTopInventory(player))){
-            return;
-        }
-        if(event.getRawSlot() != 2){
-            return;
-        }
-
-        String renameText = "";
-        ServerVersion serverVersion = ConditionalEvents.serverVersion;
-        if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_21_R3)){
-            AnvilView view = (AnvilView) event.getView();
-            if(player.getLevel() < view.getRepairCost()){
-                return;
-            }
-            renameText = view.getRenameText();
-        }else{
-            if(player.getLevel() < inv.getRepairCost()){
-                return;
-            }
-            renameText = inv.getRenameText();
-        }
-
-
-        ItemStack resultItem = inv.getItem(2);
-        if(resultItem == null || resultItem.getType().equals(Material.AIR)){
-            return;
-        }
-
-        ItemStack item = inv.getItem(0);
         ConditionEvent conditionEvent = new ConditionEvent(plugin, player, event, EventType.ITEM_REPAIR, null);
         if(!conditionEvent.containsValidEvents()) return;
         conditionEvent.addVariables(
-                        new StoredVariable("%rename_text%",renameText)
-                ).setCommonItemVariables(item,null)
+                        new StoredVariable("%rename_text%",event.getRenameText()),
+                        new StoredVariable("%repair_type%",event.getRepairType().name())
+                ).setCommonItemVariables(event.getItem(),null)
                 .checkEvent();
     }
 

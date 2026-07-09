@@ -6,7 +6,7 @@
 
     <groupId>ce.ajneb97</groupId>
     <artifactId>ConditionalEvents</artifactId>
-    <version>4.78.1</version>
+    <version>4.79.1</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -59,6 +59,10 @@
             <id>matteodev</id>
             <url>https://maven.devs.beer/</url>
         </repository>
+        <repository>
+            <id>codemc-releases</id>
+            <url>https://repo.codemc.io/repository/maven-releases/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -110,9 +114,9 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.comphenix.protocol</groupId>
+            <groupId>net.dmulloy2</groupId>
             <artifactId>ProtocolLib</artifactId>
-            <version>5.0.0-SNAPSHOT</version>
+            <version>5.4.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -125,6 +129,12 @@
             <groupId>dev.lone</groupId>
             <artifactId>api-itemsadder</artifactId>
             <version>4.0.10</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.retrooper</groupId>
+            <artifactId>packetevents-spigot</artifactId>
+            <version>2.13.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

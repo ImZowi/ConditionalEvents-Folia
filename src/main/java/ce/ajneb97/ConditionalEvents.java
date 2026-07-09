@@ -8,6 +8,7 @@ import ce.ajneb97.libs.armorequipevent.ArmorListener;
 import ce.ajneb97.libs.itemselectevent.ItemSelectListener;
 import ce.ajneb97.libs.itemselectevent.ItemSelectListenerNew;
 import ce.ajneb97.libs.offhandevent.OffHandListener;
+import ce.ajneb97.libs.repairevent.RepairListener;
 import ce.ajneb97.listeners.*;
 import ce.ajneb97.listeners.dependencies.CitizensListener;
 import ce.ajneb97.managers.dependencies.Metrics;
@@ -116,6 +117,9 @@ public class ConditionalEvents extends JavaPlugin {
 			pm.registerEvents(new ItemSelectListenerNew(), this);
 			pm.registerEvents(new PlayerEventsListenerNew1_9(this), this);
 			pm.registerEvents(new OffHandListener(this), this);
+		}
+		if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_16_R3)){
+			pm.registerEvents(new RepairListener(this), this);
 		}
 		if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_16_R1)){
 			pm.registerEvents(new PlayerEventsListenerNew1_16(this), this);

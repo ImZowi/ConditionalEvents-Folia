@@ -59,13 +59,6 @@ public class ProtocolLibManager {
                     }
                 }
 
-                if(isPaper && OtherUtils.isChatNew()){
-                    for(boolean b : packet.getBooleans().getValues()){
-                        if(b){
-                            return;
-                        }
-                    }
-                }
 
                 for(Object object : packet.getModifier().getValues()) {
                     if(object == null) {
@@ -101,6 +94,12 @@ public class ProtocolLibManager {
 
                 for(WrappedChatComponent wrappedChatComponent : packet.getChatComponents().getValues()) {
                     if(wrappedChatComponent != null) {
+                        if (event.getPacketType() == PacketType.Play.Server.SYSTEM_CHAT) {
+                            if(packet.getBooleans().read(0)){
+                                return;
+                            }
+                        }
+
                         String jsonMessage = wrappedChatComponent.getJson();
                         String normalMessage = null;
                         if(isPaper && OtherUtils.isChatNew()){

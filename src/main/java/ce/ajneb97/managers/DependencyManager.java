@@ -2,6 +2,7 @@ package ce.ajneb97.managers;
 
 import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.managers.dependencies.DiscordSRVManager;
+import ce.ajneb97.managers.dependencies.PacketEventsManager;
 import ce.ajneb97.managers.dependencies.ProtocolLibManager;
 import org.bukkit.Bukkit;
 
@@ -14,6 +15,7 @@ public class DependencyManager {
     private boolean paper;
     private ProtocolLibManager protocolLibManager;
     private DiscordSRVManager discordSRVManager;
+    private PacketEventsManager packetEventsManager;
 
     public DependencyManager(ConditionalEvents plugin){
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null
@@ -47,6 +49,13 @@ public class DependencyManager {
         }catch(Exception e){
 
         }
+
+        if(Bukkit.getPluginManager().getPlugin("PacketEvents") != null
+                && Bukkit.getPluginManager().getPlugin("PacketEvents").isEnabled()
+                && paper){
+            packetEventsManager = new PacketEventsManager(plugin);
+            packetEventsManager.init();
+        }
     }
 
     public boolean isPlaceholderAPI() {
@@ -75,5 +84,9 @@ public class DependencyManager {
 
     public boolean isItemsAdder() {
         return itemsAdder;
+    }
+
+    public PacketEventsManager getPacketEventsManager() {
+        return packetEventsManager;
     }
 }
