@@ -19,12 +19,10 @@ import org.bukkit.inventory.view.AnvilView;
 // 1.16.5+
 public class RepairListener implements Listener {
 
-    private ConditionalEvents plugin;
-    public RepairListener(ConditionalEvents plugin){
-        this.plugin = plugin;
-    }
+    public RepairListener() {}
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("removal")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         if(!event.getInventory().equals(InventoryUtils.getTopInventory(player))){

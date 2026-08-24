@@ -1,13 +1,11 @@
 package ce.ajneb97.model.internal;
 
-import org.bukkit.scheduler.BukkitTask;
-
 public class WaitActionTask {
     private String playerName;
     private String eventName;
-    private BukkitTask task;
+    private Object task;
 
-    public WaitActionTask(String playerName, String eventName, BukkitTask task) {
+    public WaitActionTask(String playerName, String eventName, Object task) {
         this.playerName = playerName;
         this.eventName = eventName;
         this.task = task;
@@ -29,11 +27,11 @@ public class WaitActionTask {
         this.eventName = eventName;
     }
 
-    public BukkitTask getTask() {
+    public Object getTask() {
         return task;
     }
 
-    public void setTask(BukkitTask task) {
+    public void setTask(Object task) {
         this.task = task;
     }
 }

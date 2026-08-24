@@ -34,7 +34,8 @@ public class ExpansionCE extends PlaceholderExpansion {
         return "conditionalevents";
     }
 
-    @Override
+    @SuppressWarnings("deprecation")
+	@Override
     public String getVersion(){
         return plugin.getDescription().getVersion();
     }

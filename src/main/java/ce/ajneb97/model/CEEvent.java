@@ -2,7 +2,6 @@ package ce.ajneb97.model;
 
 import ce.ajneb97.managers.RepetitiveManager;
 import ce.ajneb97.model.actions.ActionGroup;
-import org.bukkit.Bukkit;
 
 import java.util.List;
 
@@ -30,8 +29,6 @@ public class CEEvent {
 
     private List<String> preventCooldownActivationActionGroups;
     private List<String> preventOneTimeActivationActionGroups;
-
-
 
     public CEEvent(String name){
         this.name = name;
@@ -162,8 +159,6 @@ public class CEEvent {
     public void setCustomEventProperties(CustomEventProperties customEventProperties) {
         this.customEventProperties = customEventProperties;
     }
-
-
 
     public ActionGroup getActionGroup(String name){
         for(ActionGroup actionGroup : actionGroups){

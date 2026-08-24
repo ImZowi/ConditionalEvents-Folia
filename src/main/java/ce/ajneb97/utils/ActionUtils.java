@@ -3,6 +3,7 @@ package ce.ajneb97.utils;
 import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.api.ConditionalEventsAPI;
 import ce.ajneb97.api.ConditionalEventsCallEvent;
+import ce.ajneb97.api.FoliaAPI;
 import ce.ajneb97.libs.actionbar.ActionBarAPI;
 import ce.ajneb97.libs.titles.TitleAPI;
 import ce.ajneb97.managers.InterruptEventManager;
@@ -33,8 +34,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.InvocationTargetException;
@@ -42,6 +41,7 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("deprecation")
 public class ActionUtils {
 
     public static void message(Player player,String actionLine){
@@ -910,24 +910,21 @@ public class ActionUtils {
     public static void setFoodLevel(Player player,String actionLine){
         player.setFoodLevel(Integer.parseInt(actionLine));
     }
-
     public static void wait(String actionLine, ExecutedEvent executedEvent){
         executedEvent.setOnWait(true);
         int timeSeconds = Integer.parseInt(actionLine);
 
         InterruptEventManager interruptEventManager = ConditionalEventsAPI.getPlugin().getInterruptEventManager();
-        BukkitTask task = new BukkitRunnable(){
-            @Override
-            public void run() {
-                interruptEventManager.removeTaskById(this.getTaskId());
-                executedEvent.continueWithActions();
-            }
-        }.runTaskLater(executedEvent.getPlugin(), timeSeconds* 20L);
+        Object[] taskHolder = new Object[1];
+        taskHolder[0] = FoliaAPI.runTaskLater(executedEvent.getPlugin(), ignored -> {
+            interruptEventManager.removeTask(taskHolder[0]);
+            executedEvent.continueWithActions();
+        }, timeSeconds * 20L);
 
         interruptEventManager.addTask(
                 executedEvent.getPlayer() != null ? executedEvent.getPlayer().getName() : null,
                 executedEvent.getEvent().getName(),
-                task
+                taskHolder[0]
         );
     }
 
@@ -936,18 +933,16 @@ public class ActionUtils {
         long timeTicks = Long.parseLong(actionLine);
 
         InterruptEventManager interruptEventManager = ConditionalEventsAPI.getPlugin().getInterruptEventManager();
-        BukkitTask task = new BukkitRunnable(){
-            @Override
-            public void run() {
-                interruptEventManager.removeTaskById(this.getTaskId());
-                executedEvent.continueWithActions();
-            }
-        }.runTaskLater(executedEvent.getPlugin(), timeTicks);
+        Object[] taskHolder = new Object[1];
+        taskHolder[0] = FoliaAPI.runTaskLater(executedEvent.getPlugin(), ignored -> {
+            interruptEventManager.removeTask(taskHolder[0]);
+            executedEvent.continueWithActions();
+        }, timeTicks);
 
         interruptEventManager.addTask(
                 executedEvent.getPlayer() != null ? executedEvent.getPlayer().getName() : null,
                 executedEvent.getEvent().getName(),
-                task
+                taskHolder[0]
         );
     }
 

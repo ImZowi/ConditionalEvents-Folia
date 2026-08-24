@@ -1,6 +1,5 @@
 package ce.ajneb97;
 
-
 import ce.ajneb97.api.ConditionalEventsAPI;
 import ce.ajneb97.api.ExpansionCE;
 import ce.ajneb97.configs.ConfigsManager;
@@ -29,6 +28,7 @@ import java.util.ArrayList;
 
 public class ConditionalEvents extends JavaPlugin {
   
+	@SuppressWarnings("deprecation")
 	PluginDescriptionFile pdfFile = getDescription();
 	public String version = pdfFile.getVersion();
 	public static ServerVersion serverVersion;
@@ -58,11 +58,11 @@ public class ConditionalEvents extends JavaPlugin {
 		this.eventsManager = new EventsManager(this);
 		this.dependencyManager = new DependencyManager(this);
 		this.bungeeMessagingManager = new BungeeMessagingManager(this);
-		this.debugManager = new DebugManager(this);
+		this.debugManager = new DebugManager();
 		this.playerManager =  new PlayerManager(this);
 		this.savedItemsManager = new SavedItemsManager(this);
 		this.apiManager = new APIManager(this);
-		this.interruptEventManager = new InterruptEventManager(this);
+		this.interruptEventManager = new InterruptEventManager();
 		this.configsManager = new ConfigsManager(this);
 		this.configsManager.configure();
 
@@ -79,11 +79,11 @@ public class ConditionalEvents extends JavaPlugin {
 
 		reloadPlayerDataSaveTask();
 
-		ConditionalEventsAPI api = new ConditionalEventsAPI(this);
+		new ConditionalEventsAPI(this);
 		if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null){
 			new ExpansionCE(this).register();
 		}
-		Metrics metrics = new Metrics(this, 19371);
+		new Metrics(this, 19371);
 
 		Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eHas been enabled! &fVersion: "+version));
         Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eThanks for using my plugin!   &f~Ajneb97"));
@@ -116,10 +116,10 @@ public class ConditionalEvents extends JavaPlugin {
 		if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_9_R1)){
 			pm.registerEvents(new ItemSelectListenerNew(), this);
 			pm.registerEvents(new PlayerEventsListenerNew1_9(this), this);
-			pm.registerEvents(new OffHandListener(this), this);
+			pm.registerEvents(new OffHandListener(), this);
 		}
 		if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_16_R3)){
-			pm.registerEvents(new RepairListener(this), this);
+			pm.registerEvents(new RepairListener(), this);
 		}
 		if(serverVersion.serverVersionGreaterEqualThan(serverVersion,ServerVersion.v1_16_R1)){
 			pm.registerEvents(new PlayerEventsListenerNew1_16(this), this);

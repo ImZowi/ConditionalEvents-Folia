@@ -26,7 +26,8 @@ public class SavedItemsManager {
         this.savedItems = savedItems;
     }
 
-    public ItemStack getItem(String name, Player player){
+    @SuppressWarnings("deprecation")
+	public ItemStack getItem(String name, Player player){
         if(!savedItems.containsKey(name)){
             return null;
         }

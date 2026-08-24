@@ -1,15 +1,12 @@
 # ConditionalEvents
+- Download ConditionalEvents `[4.79.2]` for Folia build: [See "Actions" tab or click here, and download latest Action](https://github.com/ImZowi/ConditionalEvents-Folia/actions).
+- ConditionalEvents in SpigotMC: [Click here](https://www.spigotmc.org/resources/82271/).
 
-Minecraft Plugin that allows you to add different conditions to certain events. If these conditions are accomplished, then custom actions will be executed. The possibilities of what you can do with the plugin are endless.
+Obtain support in my discord server: https://discord.zowi.gay/
+Discord: Zowi - `@imfoxer`
 
-**Spigot / Paper 1.8.9+**
-
-## Download Links
-- [SpigotMC](https://www.spigotmc.org/resources/conditionalevents-custom-actions-for-specific-events-1-8-26-2.82271/)
-- [Modrinth](https://modrinth.com/plugin/conditionalevents)
-
-
-## Other Links
-- [Wiki](https://ajneb97.gitbook.io/conditionalevents)
-- [bStats](https://bstats.org/plugin/bukkit/ConditionalEvents/19371)
-- [Support me on Ko-fi](https://ko-fi.com/ajneb97)
+### Also, added some events:
+- CITIZENS_LEFT_CLICK_NPC
+- FANZYNPCS_RIGHT_CLICK_NPC
+- FANZYNPCS_LEFT_CLICK_NPC
+- FANZYNPCS_ANY_CLICK_NPC

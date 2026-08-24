@@ -10,6 +10,7 @@ public class DependencyManager {
 
     private boolean placeholderAPI;
     private boolean citizens;
+    private boolean fancynpcs;
     private boolean worldGuardEvents;
     private boolean itemsAdder;
     private boolean paper;
@@ -26,6 +27,10 @@ public class DependencyManager {
             && Bukkit.getPluginManager().getPlugin("Citizens").isEnabled()){
             citizens = true;
         }
+        if(Bukkit.getPluginManager().getPlugin("FancyNpcs") != null
+        	&& Bukkit.getPluginManager().getPlugin("FancyNpcs").isEnabled()){
+        	fancynpcs = true;
+        }
         if(Bukkit.getPluginManager().getPlugin("WorldGuardEvents") != null
             && Bukkit.getPluginManager().getPlugin("WorldGuardEvents").isEnabled()){
             worldGuardEvents = true;
@@ -36,7 +41,7 @@ public class DependencyManager {
         }
         if(Bukkit.getPluginManager().getPlugin("DiscordSRV") != null
                 && Bukkit.getPluginManager().getPlugin("DiscordSRV").isEnabled()){
-            discordSRVManager = new DiscordSRVManager(plugin);
+            discordSRVManager = new DiscordSRVManager();
         }
         if(Bukkit.getPluginManager().getPlugin("ItemsAdder") != null
                 && Bukkit.getPluginManager().getPlugin("ItemsAdder").isEnabled()){
@@ -64,6 +69,10 @@ public class DependencyManager {
 
     public boolean isCitizens() {
         return citizens;
+    }
+    
+    public boolean isFancyNpcs() {
+    	return fancynpcs;
     }
 
     public boolean isWorldGuardEvents() {

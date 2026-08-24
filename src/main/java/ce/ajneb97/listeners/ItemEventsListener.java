@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("deprecation")
 public class ItemEventsListener implements Listener {
 
     public ConditionalEvents plugin;
@@ -182,7 +183,8 @@ public class ItemEventsListener implements Listener {
         String enchantmentStringList = "";
         List<Map.Entry<Enchantment,Integer>> enchantmentList = new ArrayList<>(event.getEnchantsToAdd().entrySet());
         for(int i=0;i<enchantmentList.size();i++){
-            String enchant = enchantmentList.get(i).getKey().getName()+":"+enchantmentList.get(i).getValue();
+            @SuppressWarnings("removal")
+			String enchant = enchantmentList.get(i).getKey().getName()+":"+enchantmentList.get(i).getValue();
             enchantmentStringList += enchant;
             if(i < enchantmentList.size()-1){
                 enchantmentStringList += ";";

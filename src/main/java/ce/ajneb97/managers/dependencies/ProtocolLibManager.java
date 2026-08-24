@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("deprecation")
 public class ProtocolLibManager {
 
     private ConditionalEvents plugin;

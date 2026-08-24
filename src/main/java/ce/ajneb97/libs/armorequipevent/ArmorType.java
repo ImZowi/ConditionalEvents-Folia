@@ -2,7 +2,6 @@ package ce.ajneb97.libs.armorequipevent;
 
 import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.utils.ServerVersion;
-import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 /**

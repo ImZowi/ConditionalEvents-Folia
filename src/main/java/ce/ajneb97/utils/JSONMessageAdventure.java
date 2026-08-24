@@ -1,6 +1,5 @@
 package ce.ajneb97.utils;
 
-
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -13,6 +12,7 @@ public class JSONMessageAdventure {
 	private Player player;
 	private String text;
 	private Component hover;
+	@SuppressWarnings("unused")
 	private String suggestCommand;
 	private ClickEvent executeCommand;
 

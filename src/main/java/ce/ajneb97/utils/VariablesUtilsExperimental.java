@@ -1,19 +1,6 @@
 package ce.ajneb97.utils;
 
-import ce.ajneb97.model.EventType;
-import ce.ajneb97.model.StoredVariable;
-import ce.ajneb97.model.internal.PostEventVariableResult;
 import ce.ajneb97.model.internal.VariablesProperties;
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.block.BlockEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

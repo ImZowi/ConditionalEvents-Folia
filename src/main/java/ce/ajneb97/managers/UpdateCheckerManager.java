@@ -16,7 +16,8 @@ public class UpdateCheckerManager {
         this.version = version;
     }
 
-    public UpdateCheckerResult check(){
+    @SuppressWarnings("resource")
+	public UpdateCheckerResult check(){
         try {
             HttpURLConnection con = (HttpURLConnection) new URL(
                     "https://api.spigotmc.org/legacy/update.php?resource=82271").openConnection();

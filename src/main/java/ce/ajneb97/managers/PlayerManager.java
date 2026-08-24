@@ -1,6 +1,7 @@
 package ce.ajneb97.managers;
 
 import ce.ajneb97.ConditionalEvents;
+import ce.ajneb97.api.FoliaAPI;
 import ce.ajneb97.configs.PlayersConfigsManager;
 import ce.ajneb97.model.EventType;
 import ce.ajneb97.model.internal.ConditionEvent;
@@ -10,7 +11,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -120,32 +120,26 @@ public class PlayerManager {
     }
 
     public void resetDataForAllPlayers(String eventName, FileConfiguration messagesConfig, GenericCallback<String> callback){
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                PlayersConfigsManager playersConfigsManager = plugin.getConfigsManager().getPlayerConfigsManager();
-                playersConfigsManager.resetDataForAllPlayers(eventName);
+        FoliaAPI.runTaskAsynchronously(plugin, () -> {
+            PlayersConfigsManager playersConfigsManager = plugin.getConfigsManager().getPlayerConfigsManager();
+            playersConfigsManager.resetDataForAllPlayers(eventName);
 
-                new BukkitRunnable(){
-                    @Override
-                    public void run() {
-                        String result;
-                        if(eventName.equals("all")) {
-                            // All data, retained:
-                            players.values().forEach(PlayerData::resetAll);
-                            result = messagesConfig.getString("Messages.eventDataResetAllForAllPlayers");
-                        }else {
-                            // Specific event, retained:
-                            players.values().forEach(p -> p.resetEvent(eventName));
-                            result = messagesConfig.getString("Messages.eventDataResetForAllPlayers")
-                                    .replace("%event%", eventName);
-                        }
+            FoliaAPI.runTask(plugin, () -> {
+                String result;
+                if(eventName.equals("all")) {
+                    // All data, retained:
+                    players.values().forEach(PlayerData::resetAll);
+                    result = messagesConfig.getString("Messages.eventDataResetAllForAllPlayers");
+                }else {
+                    // Specific event, retained:
+                    players.values().forEach(p -> p.resetEvent(eventName));
+                    result = messagesConfig.getString("Messages.eventDataResetForAllPlayers")
+                            .replace("%event%", eventName);
+                }
 
-                        callback.onDone(result);
-                    }
-                }.runTask(plugin);
-            }
-        }.runTaskAsynchronously(plugin);
+                callback.onDone(result);
+            });
+        });
     }
 
     public void manageJoin(AsyncPlayerPreLoginEvent event){
@@ -188,12 +182,9 @@ public class PlayerManager {
         PlayerData playerData = getPlayer(player,false);
         if(playerData != null){
             if(playerData.isModified()){
-                new BukkitRunnable(){
-                    @Override
-                    public void run() {
-                        plugin.getConfigsManager().getPlayerConfigsManager().saveConfig(playerData);
-                    }
-                }.runTaskAsynchronously(plugin);
+                FoliaAPI.runTaskAsynchronously(plugin, () -> {
+                    plugin.getConfigsManager().getPlayerConfigsManager().saveConfig(playerData);
+                });
             }
 
             // Retain player data if enabled

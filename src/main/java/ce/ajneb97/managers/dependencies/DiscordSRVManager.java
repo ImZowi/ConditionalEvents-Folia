@@ -1,6 +1,5 @@
 package ce.ajneb97.managers.dependencies;
 
-import ce.ajneb97.ConditionalEvents;
 import github.scarsz.discordsrv.DiscordSRV;
 import github.scarsz.discordsrv.dependencies.jda.api.EmbedBuilder;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.MessageChannel;
@@ -10,10 +9,7 @@ import org.bukkit.entity.Player;
 
 public class DiscordSRVManager {
 
-    private ConditionalEvents plugin;
-    public DiscordSRVManager(ConditionalEvents plugin){
-        this.plugin = plugin;
-    }
+    public DiscordSRVManager() {}
 
     public void sendEmbedMessage(String actionLine){
         // discordsrv_embed: channel:<channel>;author_name:<name>;title:<title>;player_skin_name:<name>;

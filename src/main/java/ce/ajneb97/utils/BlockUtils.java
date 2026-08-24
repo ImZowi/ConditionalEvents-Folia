@@ -16,12 +16,12 @@ import org.bukkit.profile.PlayerTextures;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 import java.util.Collection;
 import java.util.UUID;
 
+@SuppressWarnings({ "removal", "deprecation" })
 public class BlockUtils {
 
     public static String getHeadTextureData(Block block) {

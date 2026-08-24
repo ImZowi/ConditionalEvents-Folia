@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@SuppressWarnings("deprecation")
 public class GlobalVariablesUtils {
 
     private static int lastGeneratedRandomNumber;
@@ -137,7 +138,8 @@ public class GlobalVariablesUtils {
         return block.getType().name();
     }
 
-    public static String variableBlockDataAt(String variable){
+    @SuppressWarnings("removal")
+	public static String variableBlockDataAt(String variable){
         String variableLR = variable.replace("block_data_at_", "");
         String[] variableLRSplit = variableLR.split("_");
         Block block = getBlockFromFormat(variableLRSplit);

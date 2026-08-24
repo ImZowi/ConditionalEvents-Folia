@@ -27,6 +27,7 @@ import java.util.List;
 
 // Represent an event that is being executed and conditions need
 // to be checked.
+@SuppressWarnings("deprecation")
 public class ConditionEvent {
 
     private ConditionalEvents plugin;
@@ -104,7 +105,8 @@ public class ConditionEvent {
         return this;
     }
 
-    public ConditionEvent setCommonBlockVariables(Block block){
+    @SuppressWarnings("removal")
+	public ConditionEvent setCommonBlockVariables(Block block){
         Location l = block.getLocation();
         eventVariables.add(new StoredVariable("%block_x%",l.getBlockX()+""));
         eventVariables.add(new StoredVariable("%block_y%",l.getBlockY()+""));

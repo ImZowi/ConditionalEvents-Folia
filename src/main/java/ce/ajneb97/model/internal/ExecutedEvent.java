@@ -2,6 +2,7 @@ package ce.ajneb97.model.internal;
 
 import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.api.ConditionalEventsEvent;
+import ce.ajneb97.api.FoliaAPI;
 import ce.ajneb97.managers.DebugManager;
 import ce.ajneb97.managers.EventsManager;
 import ce.ajneb97.model.CEEvent;
@@ -15,7 +16,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,13 +103,10 @@ public class ExecutedEvent {
         executeCancelActions();
 
         if(!Bukkit.isPrimaryThread()){
-            new BukkitRunnable(){
-                @Override
-                public void run() {
-                    plugin.getServer().getPluginManager().callEvent(ceEvent);
-                    executeActionsFinal();
-                }
-            }.runTask(plugin);
+            FoliaAPI.runTask(plugin, () -> {
+                plugin.getServer().getPluginManager().callEvent(ceEvent);
+                executeActionsFinal();
+            });
         }else{
             plugin.getServer().getPluginManager().callEvent(ceEvent);
             executeActionsFinal();
@@ -329,6 +326,8 @@ public class ExecutedEvent {
             case API:
                 plugin.getApiManager().executeAction(apiType,livingEntity,actionLine,minecraftEvent);
                 return;
+			default:
+				break;
         }
 
         //LivingEntity actions
@@ -402,6 +401,8 @@ public class ExecutedEvent {
                     return;
                 case TAB_COMPLETE:
                     ActionUtils.tabComplete(actionLine,minecraftEvent);
+				default:
+					break;
             }
         }
 
@@ -434,6 +435,8 @@ public class ExecutedEvent {
             case THROW_COORDINATE:
                 ActionUtils.throwCoordinate(livingEntity, actionLine);
                 return;
+			default:
+				break;
         }
 
     }

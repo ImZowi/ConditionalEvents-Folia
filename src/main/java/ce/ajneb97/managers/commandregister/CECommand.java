@@ -4,7 +4,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.defaults.BukkitCommand;
 import org.jetbrains.annotations.NotNull;
 
-
 public class CECommand extends BukkitCommand {
 
     public CECommand(@NotNull String name) {

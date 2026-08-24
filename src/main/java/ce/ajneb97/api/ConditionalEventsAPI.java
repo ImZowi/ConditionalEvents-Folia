@@ -11,7 +11,7 @@ public class ConditionalEventsAPI {
 
     private static ConditionalEvents plugin;
     public ConditionalEventsAPI(ConditionalEvents plugin){
-        this.plugin = plugin;
+        ConditionalEventsAPI.plugin = plugin;
     }
 
     public static String getEventCooldown(Player player, String event){

@@ -1,6 +1,5 @@
 package ce.ajneb97.model.verify;
 
-import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.api.ConditionalEventsAPI;
 import ce.ajneb97.utils.JSONMessage;
 import ce.ajneb97.utils.JSONMessageAdventure;

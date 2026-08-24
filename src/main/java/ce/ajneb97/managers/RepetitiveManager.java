@@ -1,12 +1,12 @@
 package ce.ajneb97.managers;
 
 import ce.ajneb97.ConditionalEvents;
+import ce.ajneb97.api.FoliaAPI;
 import ce.ajneb97.model.CEEvent;
 import ce.ajneb97.model.EventType;
 import ce.ajneb97.model.internal.ConditionEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 public class RepetitiveManager {
 
@@ -34,14 +34,11 @@ public class RepetitiveManager {
     public void start(){
         this.mustEnd = false;
         this.started = true;
-        new BukkitRunnable(){
-            @Override
-            public void run() {
-                if(mustEnd || !execute()){
-                    this.cancel();
-                }
+        FoliaAPI.runTaskTimerAsync(plugin, task -> {
+            if(mustEnd || !execute()){
+                FoliaAPI.cancelTask(task);
             }
-        }.runTaskTimerAsynchronously(plugin, 0L, ticks);
+        }, 0L, ticks);
     }
 
     public boolean execute(){

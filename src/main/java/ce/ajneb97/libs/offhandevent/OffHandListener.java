@@ -14,10 +14,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class OffHandListener implements Listener {
 
-    private ConditionalEvents plugin;
-    public OffHandListener(ConditionalEvents plugin){
-        this.plugin = plugin;
-    }
+    public OffHandListener() {}
 
     @EventHandler
     public void onPlayerSwapHand(PlayerSwapHandItemsEvent event){

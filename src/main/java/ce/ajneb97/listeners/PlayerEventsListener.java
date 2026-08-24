@@ -7,7 +7,6 @@ import ce.ajneb97.managers.MessagesManager;
 import ce.ajneb97.model.EventType;
 import ce.ajneb97.model.StoredVariable;
 import ce.ajneb97.model.internal.ConditionEvent;
-import ce.ajneb97.model.player.PlayerData;
 import ce.ajneb97.utils.*;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -62,8 +61,8 @@ public class PlayerEventsListener implements Listener {
         String latestVersion = plugin.getUpdateCheckerManager().getLatestVersion();
         if(player.isOp() && !(plugin.version.equals(latestVersion)) &&
                 plugin.getConfigsManager().getMainConfigManager().isUpdateNotifications()){
-            player.sendMessage(MessagesManager.getLegacyColoredMessage(plugin.prefix+" &cThere is a new version available. &e(&7"+latestVersion+"&e)"));
-            player.sendMessage(MessagesManager.getLegacyColoredMessage("&cYou can download it at: &ahttps://modrinth.com/plugin/conditionalevents"));
+            player.sendMessage(MessagesManager.getLegacyColoredMessage(ConditionalEvents.prefix+" &cThere is a new version available. &e(&7"+latestVersion+"&e)"));
+            player.sendMessage(MessagesManager.getLegacyColoredMessage("&cYou can download it at: &ahttps://github.com/ImZowi/ServerVariables-Folia"));
         }
     }
 
@@ -97,7 +96,8 @@ public class PlayerEventsListener implements Listener {
                 .checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onDeath(PlayerDeathEvent event){
         Player player = event.getEntity();
         String cause = "";
@@ -136,7 +136,8 @@ public class PlayerEventsListener implements Listener {
                 .checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockInteract(PlayerInteractEvent event){
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
@@ -164,7 +165,8 @@ public class PlayerEventsListener implements Listener {
                 .checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityInteract(PlayerInteractEntityEvent event){
         Player player = event.getPlayer();
         Entity entity = event.getRightClicked();
@@ -188,7 +190,8 @@ public class PlayerEventsListener implements Listener {
                 .checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerAttack(EntityDamageByEntityEvent event){
         Entity attacker = event.getDamager();
         Entity damaged = event.getEntity();
@@ -257,7 +260,8 @@ public class PlayerEventsListener implements Listener {
                 ).checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDamaged(EntityDamageEvent event){
         Entity damaged = event.getEntity();
         if(damaged == null || !(damaged instanceof Player) || event.getCause() == null) {
@@ -295,7 +299,8 @@ public class PlayerEventsListener implements Listener {
                 ).checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerKill(EntityDeathEvent event){
         LivingEntity entity = event.getEntity();
         if(entity == null || entity.getKiller() == null) {
@@ -311,7 +316,8 @@ public class PlayerEventsListener implements Listener {
                 .checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockPlace(BlockPlaceEvent event){
         Player player = event.getPlayer();
         Block block = event.getBlock();
@@ -323,7 +329,8 @@ public class PlayerEventsListener implements Listener {
                 .checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event){
         Player player = event.getPlayer();
         Block block = event.getBlock();
@@ -356,7 +363,7 @@ public class PlayerEventsListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
-    public void onChat(AsyncPlayerChatEvent event) {
+    public void onChat(@SuppressWarnings("deprecation") AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
         new ConditionEvent(plugin, player, event, EventType.PLAYER_CHAT, null)
@@ -442,7 +449,8 @@ public class PlayerEventsListener implements Listener {
                 ).checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onBedEnter(PlayerBedEnterEvent event) {
         Player player = event.getPlayer();
 
@@ -495,7 +503,8 @@ public class PlayerEventsListener implements Listener {
                 ).setCommonItemVariables(caughtItem,null).checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onOpenInventory(InventoryOpenEvent event) {
         Player player = (Player) event.getPlayer();
 
@@ -513,7 +522,8 @@ public class PlayerEventsListener implements Listener {
                 ).checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onCloseInventory(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
 
@@ -531,7 +541,8 @@ public class PlayerEventsListener implements Listener {
                 ).checkEvent();
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @SuppressWarnings("deprecation")
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onClickInventory(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
 

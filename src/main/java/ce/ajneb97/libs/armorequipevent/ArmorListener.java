@@ -22,7 +22,6 @@ import org.bukkit.inventory.ItemStack;
 
 import ce.ajneb97.libs.armorequipevent.ArmorEquipEvent.EquipMethod;
 
-
 /**
  * @author Arnah
  * @since Jul 30, 2015
@@ -190,6 +189,7 @@ public class ArmorListener implements Listener{
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void itemBreakEvent(PlayerItemBreakEvent e){
 		ArmorType type = ArmorType.matchType(e.getBrokenItem());

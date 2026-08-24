@@ -3,13 +3,10 @@ package ce.ajneb97.managers.commandregister;
 import ce.ajneb97.ConditionalEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandMap;
-import org.bukkit.command.SimpleCommandMap;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class CommandRegisterManager {
 

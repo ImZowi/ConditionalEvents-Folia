@@ -22,6 +22,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("deprecation")
 public class OtherEventsListener implements Listener {
 
     public ConditionalEvents plugin;

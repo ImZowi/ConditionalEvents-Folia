@@ -26,9 +26,9 @@ import java.net.URL;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("deprecation")
 public class ItemUtils {
 
-    @SuppressWarnings("deprecation")
     public static ItemStack createItemFromID(String id) {
         ItemStack item = null;
         if(id.contains(":")){
@@ -73,7 +73,6 @@ public class ItemUtils {
         }
     }
 
-    @SuppressWarnings("deprecation")
     public static void setSkullData(ItemStack item,String texture,String id,String owner){
         String typeName = item.getType().name();
         if(!typeName.equals("PLAYER_HEAD") && !typeName.equals("SKULL_ITEM")) {

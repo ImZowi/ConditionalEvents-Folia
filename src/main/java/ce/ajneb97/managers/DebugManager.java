@@ -1,11 +1,9 @@
 package ce.ajneb97.managers;
 
-import ce.ajneb97.ConditionalEvents;
 import ce.ajneb97.model.actions.ActionTargeter;
 import ce.ajneb97.model.actions.ActionTargeterType;
 import ce.ajneb97.model.actions.ActionType;
 import ce.ajneb97.model.internal.DebugSender;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -14,10 +12,8 @@ import java.util.ArrayList;
 
 public class DebugManager {
 
-    private ConditionalEvents plugin;
     private ArrayList<DebugSender> debugSenders;
-    public DebugManager(ConditionalEvents plugin){
-        this.plugin = plugin;
+    public DebugManager(){
         this.debugSenders = new ArrayList<DebugSender>();
     }
 

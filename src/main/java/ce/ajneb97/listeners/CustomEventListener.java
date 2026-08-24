@@ -27,7 +27,8 @@ public class CustomEventListener implements Listener {
         configure();
     }
 
-    public void configure(){
+    @SuppressWarnings("unchecked")
+	public void configure(){
         ArrayList<CEEvent> validEvents = plugin.getEventsManager().getEventsByType(EventType.CUSTOM);
         for(CEEvent ceEvent : validEvents) {
             CustomEventProperties properties = ceEvent.getCustomEventProperties();

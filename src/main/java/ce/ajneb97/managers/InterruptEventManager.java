@@ -1,44 +1,34 @@
 package ce.ajneb97.managers;
 
-import ce.ajneb97.ConditionalEvents;
+import ce.ajneb97.api.FoliaAPI;
 import ce.ajneb97.model.internal.WaitActionTask;
-import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitTask;
-
 import java.util.*;
 
 public class InterruptEventManager {
-    private ConditionalEvents plugin;
     private ArrayList<WaitActionTask> tasks;
-
-    public InterruptEventManager(ConditionalEvents plugin){
-        this.plugin = plugin;
+    
+    public InterruptEventManager() {
         this.tasks = new ArrayList<>();
     }
-
-    public void addTask(String playerName, String eventName, BukkitTask bukkitTask){
-        tasks.add(new WaitActionTask(playerName,eventName,bukkitTask));
+    
+    public void addTask(String playerName, String eventName, Object scheduledTask){
+        tasks.add(new WaitActionTask(playerName,eventName,scheduledTask));
     }
-
-    public void removeTaskById(int taskId){
-        tasks.removeIf(task -> task.getTask().getTaskId() == taskId);
+    
+    public void removeTask(Object task) {
+        tasks.removeIf(t -> t.getTask().equals(task));
     }
-
+    
     // Interrupt actions for a specific event, globally or per player
-    public void interruptEvent(String eventName, String playerName){
-        tasks.removeIf(task -> {
-            if(playerName == null){
-                if(task.getEventName().equals(eventName)){
-                    task.getTask().cancel();
-                    return true;
-                }
-            }else{
-                if(task.getPlayerName() != null && task.getPlayerName().equals(playerName) && task.getEventName().equals(eventName)){
-                    task.getTask().cancel();
-                    return true;
-                }
+    public void interruptEvent(String eventName, String playerName) {
+        Iterator<WaitActionTask> it = tasks.iterator();
+        while (it.hasNext()) {
+            WaitActionTask task = it.next();
+            boolean matches = playerName == null ? task.getEventName().equals(eventName) : playerName.equals(task.getPlayerName()) && task.getEventName().equals(eventName);
+            if (matches) {
+                FoliaAPI.cancelTask(task.getTask());
+                it.remove();
             }
-            return false;
-        });
+        }
     }
 }

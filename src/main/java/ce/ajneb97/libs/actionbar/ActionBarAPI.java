@@ -4,21 +4,20 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 import ce.ajneb97.api.ConditionalEventsAPI;
+import ce.ajneb97.api.FoliaAPI;
 import ce.ajneb97.managers.MessagesManager;
 import ce.ajneb97.utils.MiniMessageUtils;
 import ce.ajneb97.utils.OtherUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import ce.ajneb97.ConditionalEvents;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 
-public class ActionBarAPI
-{
+public class ActionBarAPI {
 
-
-    public static void sendActionBar(Player player, String message) {
+    @SuppressWarnings("deprecation")
+	public static void sendActionBar(Player player, String message) {
 	  if(OtherUtils.isNew()) {
           if(ConditionalEventsAPI.getPlugin().getConfigsManager().getMainConfigManager().isUseMiniMessage()){
               MiniMessageUtils.actionbar(player,message);
@@ -86,23 +85,21 @@ public class ActionBarAPI
 	  
       if (duration > 0) {
           // Sends empty message at the end of the duration. Allows messages shorter than 3 seconds, ensures precision.
-          new BukkitRunnable() {
-              @Override
-              public void run() {
-            	  sendActionBar(player, "");
+    	  FoliaAPI.runTask(plugin, () -> {
+              if (player.isOnline()) {
+                  sendActionBar(player, "");
               }
-          }.runTaskLater(plugin, duration + 1);
+    	  }, duration + 1);
       }
 
       // Re-sends the messages every 3 seconds so it doesn't go away from the player's screen.
       while (duration > 40) {
           duration -= 40;
-          new BukkitRunnable() {
-              @Override
-              public void run() {
+          FoliaAPI.runTask(plugin, () -> {
+              if (player.isOnline()) {
                   sendActionBar(player, message);
               }
-          }.runTaskLater(plugin, (long) duration);
+          }, duration);
       }
   }
 

@@ -7,7 +7,8 @@ import org.bukkit.inventory.PlayerInventory;
 
 public class PlayerUtils {
 
-    public static ItemStack getItemBySlot(Player player, String slot){
+    @SuppressWarnings("deprecation")
+	public static ItemStack getItemBySlot(Player player, String slot){
         PlayerInventory inventory = player.getInventory();
         switch(slot){
             case "HAND":
@@ -27,7 +28,8 @@ public class PlayerUtils {
         }
     }
 
-    public static void setItemBySlot(Player player, String slot, ItemStack item){
+    @SuppressWarnings("deprecation")
+	public static void setItemBySlot(Player player, String slot, ItemStack item){
         PlayerInventory inventory = player.getInventory();
         switch(slot){
             case "HAND":

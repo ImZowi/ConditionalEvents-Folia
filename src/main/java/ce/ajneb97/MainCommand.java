@@ -1,15 +1,11 @@
 package ce.ajneb97;
 
-
-
-
 import ce.ajneb97.configs.MainConfigManager;
 import ce.ajneb97.managers.MessagesManager;
 import ce.ajneb97.managers.PlayerManager;
 import ce.ajneb97.managers.SavedItemsManager;
 import ce.ajneb97.model.CEEvent;
 import ce.ajneb97.model.EventType;
-import ce.ajneb97.model.player.PlayerData;
 import ce.ajneb97.utils.ActionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -25,9 +21,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
-
+@SuppressWarnings("deprecation")
 public class MainCommand implements CommandExecutor, TabCompleter {
 	
 	private ConditionalEvents plugin;

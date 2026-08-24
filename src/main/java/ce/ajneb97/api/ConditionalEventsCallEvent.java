@@ -8,8 +8,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import java.util.ArrayList;
-import java.util.List;
-
 
 public class ConditionalEventsCallEvent extends Event{
 

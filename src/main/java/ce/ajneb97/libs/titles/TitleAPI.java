@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 
 import java.lang.reflect.Constructor;
 
-
+@SuppressWarnings("deprecation")
 public class TitleAPI implements Listener {
 
     public static void sendPacket(Player player, Object packet) {
@@ -53,7 +53,7 @@ public class TitleAPI implements Listener {
             Object e;
             Object chatTitle;
             Object chatSubtitle;
-            Constructor subtitleConstructor;
+            Constructor<?> subtitleConstructor;
             Object titlePacket;
             Object subtitlePacket;
 

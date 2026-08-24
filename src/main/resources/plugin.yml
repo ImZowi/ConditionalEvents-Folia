@@ -2,7 +2,7 @@ main: ce.ajneb97.ConditionalEvents
 version: ${project.version}
 name: ConditionalEvents
 api-version: 1.13
-softdepend: [PlaceholderAPI,Citizens,WorldGuardEvents,WorldGuard,ProtocolLib,DiscordSRV,ItemsAdder,PacketEvents]
+softdepend: [PlaceholderAPI,Citizens,WorldGuardEvents,WorldGuard,ProtocolLib,DiscordSRV,ItemsAdder,PacketEvents,FancyNpcs]
 author: Ajneb97
 
 commands:
