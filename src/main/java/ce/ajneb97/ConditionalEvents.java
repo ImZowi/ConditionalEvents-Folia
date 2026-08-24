@@ -30,7 +30,7 @@ public class ConditionalEvents extends JavaPlugin {
   
 	@SuppressWarnings("deprecation")
 	PluginDescriptionFile pdfFile = getDescription();
-	public String version = pdfFile.getVersion();
+	public String version = pdfFile.getVersion()+"-Folia";
 	public static ServerVersion serverVersion;
 	public static String prefix;
 
@@ -87,8 +87,9 @@ public class ConditionalEvents extends JavaPlugin {
 
 		Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eHas been enabled! &fVersion: "+version));
         Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eThanks for using my plugin!   &f~Ajneb97"));
+        Bukkit.getConsoleSender().sendMessage(MessagesManager.getLegacyColoredMessage(prefix+" &eFork by Zowi   &f~https://zowi.gay/"));
 
-		updateCheckerManager = new UpdateCheckerManager(version);
+		updateCheckerManager = new UpdateCheckerManager(version.replace("-Folia", ""));
 		if(configsManager.getMainConfigManager().isUpdateNotifications()){
 			updateMessage(updateCheckerManager.check());
 		}
