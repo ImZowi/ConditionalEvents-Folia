@@ -5,6 +5,8 @@
 Obtain support in my discord server: https://discord.zowi.gay/
 Discord: Zowi - `@imfoxer`
 
+Status: **Unusable**. Updating everything and trying to make this stable.
+
 ### Also, added some events:
 - CITIZENS_LEFT_CLICK_NPC
 - FANCYNPCS_RIGHT_CLICK_NPC
