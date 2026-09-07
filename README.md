@@ -1,4 +1,4 @@
-# ConditionalEvents
+# ConditionalEvents for Folia
 - Download ConditionalEvents `[4.79.2]` for Folia build: [See "Actions" tab or click here, and download latest Action](https://github.com/ImZowi/ConditionalEvents-Folia/actions).
 - ConditionalEvents in SpigotMC: [Click here](https://www.spigotmc.org/resources/82271/).
 
@@ -7,6 +7,6 @@ Discord: Zowi - `@imfoxer`
 
 ### Also, added some events:
 - CITIZENS_LEFT_CLICK_NPC
-- FANZYNPCS_RIGHT_CLICK_NPC
-- FANZYNPCS_LEFT_CLICK_NPC
-- FANZYNPCS_ANY_CLICK_NPC
+- FANCYNPCS_RIGHT_CLICK_NPC
+- FANCYNPCS_LEFT_CLICK_NPC
+- FANCYNPCS_ANY_CLICK_NPC
