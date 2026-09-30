@@ -68,11 +68,11 @@ public class RepairListener implements Listener {
                 return;
             }
             GrindstoneInventory inv = (GrindstoneInventory) event.getInventory();
-            ItemStack resultItem = inv.getResult();
+            ItemStack resultItem = inv.getItem(2);
             if(resultItem == null || resultItem.getType().equals(Material.AIR)){
                 return;
             }
-            item = inv.getUpperItem();
+            item = inv.getItem(0);
             repairType = RepairEvent.RepairType.GRINDSTONE;
         }else{
             return;
